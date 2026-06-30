@@ -1,1 +1,4 @@
-Shell File for Configurations
+R1 Configurations:
+
+conf t
+hostname R1
