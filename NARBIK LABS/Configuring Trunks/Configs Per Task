@@ -1,0 +1,154 @@
+----------------------------------------------------------------------------------------------------------------------
+TASK 1: Shut down all ports on all six switches and configure the VTP domain name to be TST.
+
+SW1:
+Switch(config)#interface range et3/0-3
+Switch(config-if-range)#shut
+Switch(config)#vtp domain TST
+Switch#wr mem
+
+SW2:
+Switch(config)#interface range e3/0-1
+Switch(config-if-range)#shut
+Switch(config)#interface range e4/0-1
+Switch(config-if-range)#shut
+Switch(config-if-range)#interface range e5/0-1
+Switch(config-if-range)#shut
+Switch(config)#interface range e6/0-1
+Switch(config-if-range)#shut
+Switch(config)#vtp domain TST
+Switch#wr mem
+
+SW3:
+Switch(config)#interface range e3/2-3
+Switch(config-if-range)#shut
+Switch(config)#interface range e4/0-1
+Switch(config-if-range)#shut
+Switch(config)#interface range e5/0-1
+Switch(config-if-range)#shut
+Switch(config)#interface range e6/0-1
+Switch(config-if-range)#shut
+Switch(config)#vtp domain TST
+Switch#wr mem
+
+SW4:
+Switch(config)#interface range e3/0-1
+Switch(config-if-range)#shut
+Switch(config)#interface range e4/0-1
+Switch(config-if-range)#shut
+Switch(config)#interface range e5/0-1
+Switch(config-if-range)#shut
+Switch(config)#interface range e6/0-1
+Switch(config-if-range)#shut
+Switch(config)#vtp domain TST
+Switch#wr mem
+
+SW5:
+Switch(config)#interface range e3/2-3
+Switch(config-if-range)#shut
+Switch(config)#interface range e4/0-1
+Switch(config-if-range)#shut
+Switch(config)#interface range e5/0-1
+Switch(config-if-range)#shut
+Switch(config)#interface range e6/0-1
+Switch(config-if-range)#shut
+Switch(config)#vtp domain TST
+Switch#wr mem
+
+SW6:
+Switch(config)#interface range et3/0-3
+Switch(config-if-range)#shut
+Switch(config)#vtp domain TST
+Switch#wr mem
+
+
+----------------------------------------------------------------------------------------------------------------------
+
+TASK 2: Configure the following hostnames:
+Second switch: SW2
+Third switch: SW3
+Fourth switch: SW4
+Fifth switch: SW5
+
+SWx:
+Switch(config)#hostname SWx
+SWx# wr mem
+
+----------------------------------------------------------------------------------------------------------------------
+
+TASK 3: 
+Configure a dot1q trunk between SW3 and SW5 using their E5/0 interfaces, based on the
+following policy:
+SW3, E5/0
+This port should be configured into a permanent trunk mode, and it should negotiate to
+convert the neighboring interface into a trunk.
+SW5, E5/0
+This port should be configured to actively attempt to convert the link to a trunk. You
+should not configure switchport trunk encapsulation dot1q on this port.
+
+
+SW3:
+SW3(config-if)#switchport trunk encapsulation dot1q
+SW3(config-if)#switchport mode trunk
+SW3(config-if)#no shut
+
+SW5:
+SW5(config-if)#switchport mode dynamic desirable 
+SW5(config-if)#no shut
+
+----------------------------------------------------------------------------------------------------------------------
+
+TASK 4:
+Configure a trunk between SW3 and SW5, using their E5/1 interfaces. You should use an
+industry-standard protocol for the trunk encapsulation, based on the following policy:
+SW3, E5/1
+This port should be configured into permanent trunk mode, and it should negotiate to
+convert the neighboring interface into a trunk.
+SW5, E5/1
+This port should be configured to negotiate a trunk only if it receives negotiation packets
+from a neighboring port; this port should never start the negotiation process. You should
+not configure switchport trunk encapsulation dot1q on this port.
+
+NOTE: Utilize show interfaces trunk AND show interface <interface name> switchport to verify configurations
+
+
+SW3:
+SW3(config-if)#switchport trunk encapsulation dot1q 
+SW3(config-if)#switchport mode trunk 
+SW3(config-if)#no shut
+
+SW5:
+SW5(config-if)#switchport mode dynamic auto
+SW5(config-if)#no shut
+
+----------------------------------------------------------------------------------------------------------------------
+
+TASK 5: Configure a trunk link between SW4 and SW5, using their E4/0 interfaces. These ports
+should be configured to negotiate the neighboring interface into a dot1q trunk, but they
+should not be in permanent trunk mode.
+
+SW4:
+SW4(config-if)#switchport trunk encapsulation dot1q 
+SW4(config-if)#switchport mode dynamic desirable
+SW4(config-if)#no shut
+
+SW5:
+SW5(config-if)#switchport trunk encapsulation dot1q 
+SW5(config-if)#switchport mode dynamic desirable 
+SW5(config-if)#no shut
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
